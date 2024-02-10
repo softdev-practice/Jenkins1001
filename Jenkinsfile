@@ -31,7 +31,7 @@ pipeline {
             steps {
                 echo 'deploying the application...'
                 withCredentials([
-                    usernamePassword(credentials: 'server-credentials', usernameVariable: USER, passwordVariable: PASSWD)
+                    usernamePassword(credentials: 'dockerhub', usernameVariable: DOCKERHUB_USER, passwordVariable: DOCKERHUB_PASSWD)
                 ]) {
                     sh "some script ${USER} ${PASSWD}"
                 }
