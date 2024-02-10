@@ -34,10 +34,12 @@ pipeline {
         }
 
         stage("push to registry") {
-            withCredentials([
-                usernamePassword(credentials: 'gitlab-profile', usernameVariable: GITLAB_USER, passwordVariable: GITLAB_ACCESS_TOKEN)
-            ]) {
-                sh "docker login registry.gitlab.com -u ${GITLAB_USER} -p ${GITLAB_ACCESS_PASSWD}"
+            steps {
+                withCredentials([
+                    usernamePassword(credentials: 'gitlab-profile', usernameVariable: GITLAB_USER, passwordVariable: GITLAB_ACCESS_TOKEN)
+                ]) {
+                    sh "docker login registry.gitlab.com -u ${GITLAB_USER} -p ${GITLAB_ACCESS_PASSWD}"
+                }
             }
         }
     }
