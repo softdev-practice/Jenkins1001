@@ -5,5 +5,16 @@
   "devDependencies": {
     "jest": "^29.7.0",
     "supertest": "^6.3.4"
-  }
+  },
+  "name": "jenkins",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "jest --watchAll --coverage"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }

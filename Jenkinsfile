@@ -30,11 +30,14 @@ pipeline {
         stage("deploy") {
             steps {
                 echo 'deploying the application...'
-                withCredentials([
-                    usernamePassword(credentials: 'dockerhub', usernameVariable: DOCKERHUB_USER, passwordVariable: DOCKERHUB_PASSWD)
-                ]) {
-                    sh "some script ${USER} ${PASSWD}"
-                }
+            }
+        }
+
+        stage("push to registry") {
+            withCredentials([
+                usernamePassword(credentials: 'gitlab-profile', usernameVariable: GITLAB_USER, passwordVariable: GITLAB_ACCESS_TOKEN)
+            ]) {
+                sh "docker login registry.gitlab.com -u ${GITLAB_USER} -p ${GITLAB_ACCESS_PASSWD}"
             }
         }
     }
