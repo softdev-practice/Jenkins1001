@@ -18,18 +18,21 @@ pipeline {
             steps {
                 echo 'building the application...'
                 sh 'npm i'
+                sh 'docker build -t gitlab-registry-demo .'
             }
         }
 
         stage("test") {
             steps {
                 echo 'testing the application...'
+                sh 'npm test'
             }
         }
 
         stage("deploy") {
             steps {
                 echo 'deploying the application...'
+                sh 'npm start'
             }
         }
 
@@ -40,6 +43,7 @@ pipeline {
                 ]) {
                     sh "docker login registry.gitlab.com -u ${GITLAB_USER} -p ${GITLAB_ACCESS_PASSWD}"
                 }
+                echo 'Login Success!'
             }
         }
     }
