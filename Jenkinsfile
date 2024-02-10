@@ -1,3 +1,5 @@
+CODE_CHANGES = getGitChanges()
+
 pipeline {
     agent any
 
@@ -7,8 +9,14 @@ pipeline {
 
     stages {
         stage("build") {
+            when {
+                expression {
+                    (BRANCH_NAME == 'dev' || BRANCH_NAME == 'main') && CODE_CHANGES
+                }
+            }
             steps {
                 echo 'building the application...'
+                sh 'npm i'
             }
         }
 
@@ -21,6 +29,11 @@ pipeline {
         stage("deploy") {
             steps {
                 echo 'deploying the application...'
+                withCredentials([
+                    usernamePassword(credentials: 'server-credentials', usernameVariable: USER, passwordVariable: PASSWD)
+                ]) {
+                    sh "some script ${USER} ${PASSWD}"
+                }
             }
         }
     }
