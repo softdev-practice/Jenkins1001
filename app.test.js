@@ -1,5 +1,5 @@
 const request = require('supertest');
-const app = require('./app');
+const app = require('./app/app');
 
 describe('GET /plus/:a/:b', () => {
   it('responds with sum of two floating point numbers', async () => {
@@ -30,7 +30,12 @@ describe('GET /plus/:a/:b', () => {
     expect(response.status).toBe(404);
   });
 
-  afterAll(done => {
-    app.close(done); // Close the server after all tests
+  afterAll(async () => {
+    try {
+      await app.close()
+    }
+    catch (err) {
+      console.log(err)
+    }
   });
 });
