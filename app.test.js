@@ -3,9 +3,9 @@ const app = require('./app/app');
 
 describe('GET /plus/:a/:b', () => {
   it('responds with sum of two floating point numbers', async () => {
-    const response = await request(app).get('/plus/2.5/3.5');
+    const response = await request(app).get('/plus/2.1/3.5');
     expect(response.status).toBe(200);
-    expect(response.text).toBe('6');
+    expect(response.text).toBe('5.6');
   });
 
   it('responds with sum of two integer numbers', async () => {
