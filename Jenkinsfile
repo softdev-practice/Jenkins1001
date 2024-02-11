@@ -18,7 +18,6 @@ pipeline {
             steps {
                 echo 'building the application...'
                 sh 'npm i'
-                sh 'docker build -t gitlab-registry-demo .'
             }
         }
 
@@ -29,21 +28,44 @@ pipeline {
             }
         }
 
-        stage("deploy") {
+        stage("robot") {
             steps {
-                echo 'deploying the application...'
-                sh 'npm start'
+                echo 'Compose Dev up'
+                sh 'docker compose -f ./compose.dev.yaml up -d --build'
+                echo 'Cloning Robot'
+                dir('./robot/') {
+                    git branch: 'main', url: 'https://github.com/Rosemarries/Jenkins1001.git'
+                }
+                echo 'Run Robot'
+                sh 'cd ./robot && robot --outputdir robot_result ./test-plus.robot'
             }
         }
 
         stage("push to registry") {
             steps {
-                withCredentials([
-                    usernamePassword(credentials: 'gitlab-profile', usernameVariable: GITLAB_USER, passwordVariable: GITLAB_ACCESS_TOKEN)
-                ]) {
-                    sh "docker login registry.gitlab.com -u ${GITLAB_USER} -p ${GITLAB_ACCESS_PASSWD}"
-                }
-                echo 'Login Success!'
+                // withCredentials([
+                //     usernamePassword(credentialsId: 'gitlab-profile', usernameVariable: GITLAB_USER, passwordVariable: GITLAB_ACCESS_TOKEN)
+                // ]) {
+                //     sh "docker login registry.gitlab.com -u ${GITLAB_USER} -p ${GITLAB_ACCESS_PASSWD}"
+                    sh "docker build -t registry.gitlab.com/softdev-practice/jenkins1001 ./app"
+                    sh "docker push registry.gitlab.com/softdev-practice/jenkins1001"
+                // }
+                echo 'Push Success!'
+            }
+        }
+
+        stage("compose down and prune") {
+            steps {
+                echo 'Cleaning'
+                sh 'docker compose -f ./compose.dev.yaml down'
+                sh 'docker system prune -a -f'
+            }
+        }
+
+        stage("deploy") {
+            steps {
+                echo 'deploying the application...'
+                sh 'docker compose up -d --build'
             }
         }
     }
