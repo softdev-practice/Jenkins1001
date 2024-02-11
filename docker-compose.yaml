@@ -4,4 +4,4 @@ services:
     container_name: app
     image: registry.gitlab.com/softdev-practice/jenkins1001
     ports:
-      - "4000:8080"
+      - "4000:5000"
