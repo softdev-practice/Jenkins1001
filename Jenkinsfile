@@ -28,19 +28,19 @@ pipeline {
             }
         }
 
-        stage("robot") {
-            steps {
-                echo 'Compose Dev up'
-                sh 'pwd && ls -al'
-                sh 'docker compose -f ./compose.dev.yaml up -d --build'
-                echo 'Cloning Robot'
-                dir('./robot/') {
-                    git branch: 'main', url: 'https://github.com/Rosemarries/Jenkins1001.git'
-                }
-                echo 'Run Robot'
-                sh 'cd ./robot && robot --outputdir robot_result ./test-plus.robot'
-            }
-        }
+        // stage("robot") {
+        //     steps {
+        //         echo 'Compose Dev up'
+        //         sh 'pwd && ls -al'
+        //         sh 'docker compose -f ./compose.dev.yaml up -d --build'
+        //         echo 'Cloning Robot'
+        //         dir('./robot/') {
+        //             git branch: 'main', url: 'https://github.com/Rosemarries/Jenkins1001.git'
+        //         }
+        //         echo 'Run Robot'
+        //         sh 'cd ./robot && robot --outputdir robot_result ./test-plus.robot'
+        //     }
+        // }
 
         stage("push to registry") {
             steps {
@@ -55,19 +55,19 @@ pipeline {
             }
         }
 
-        stage("compose down and prune") {
-            steps {
-                echo 'Cleaning'
-                sh 'docker compose -f ./compose.dev.yaml down'
-                sh 'docker system prune -a -f'
-            }
-        }
+        // stage("compose down and prune") {
+        //     steps {
+        //         echo 'Cleaning'
+        //         sh 'docker compose -f ./compose.dev.yaml down'
+        //         sh 'docker system prune -a -f'
+        //     }
+        // }
 
-        stage("deploy") {
-            steps {
-                echo 'deploying the application...'
-                sh 'docker compose up -d --build'
-            }
-        }
+        // stage("deploy") {
+        //     steps {
+        //         echo 'deploying the application...'
+        //         sh 'docker compose up -d --build'
+        //     }
+        // }
     }
 }
