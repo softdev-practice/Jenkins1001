@@ -17,14 +17,14 @@ pipeline {
             }
             steps {
                 echo 'building the application...'
-                sh 'npm i'
+                sh 'yarn i'
             }
         }
 
         stage("test") {
             steps {
                 echo 'testing the application...'
-                sh 'npm test'
+                sh 'yarn test'
             }
         }
 
