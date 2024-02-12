@@ -6,7 +6,7 @@ COPY package*.json ./
 
 RUN ls -al
 
-RUN npm install --verbose
+RUN npm install --verbose --no-optional
 # If you are building your code for production
 # RUN npm ci --omit=dev
 
