@@ -8,6 +8,8 @@ COPY package*.json ./
 
 USER node
 
+RUN npm config set registry https://registry.npmjs.org/
+
 RUN npm install --verbose
 # If you are building your code for production
 # RUN npm ci --omit=dev
