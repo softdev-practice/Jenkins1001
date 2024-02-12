@@ -1,6 +1,7 @@
 FROM node:18
 
-WORKDIR /app
+# change to /app
+WORKDIR /usr/src/app
 
 COPY package*.json ./
 
