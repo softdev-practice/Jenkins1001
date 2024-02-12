@@ -17,6 +17,7 @@ pipeline {
             }
             steps {
                 echo 'building the application...'
+                sh 'npm install --global yarn'
                 sh 'yarn i'
             }
         }
