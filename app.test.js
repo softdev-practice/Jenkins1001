@@ -1,5 +1,5 @@
 const request = require('supertest');
-const app = require('./app/app');
+const app = require('./app');
 
 describe('GET /plus/:a/:b', () => {
   it('responds with sum of two floating point numbers', async () => {
