@@ -63,6 +63,7 @@ pipeline {
 
         stage("push to registry") {
             steps {
+                echo 'Logining...'
                 withCredentials([
                     usernamePassword(credentialsId: 'gitlab-profile', usernameVariable: DEPLOY_USER, passwordVariable: DEPLOY_TOKEN)
                 ]) {
