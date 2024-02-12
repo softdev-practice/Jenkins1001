@@ -49,7 +49,6 @@ pipeline {
                 //     git branch: 'main', url: 'https://github.com/Rosemarries/Jenkins1001.git'
                 // }
                 echo 'Run Robot'
-                sh 'virtualenv venv && . venv/bin/activate && pip install robotframework'
                 sh 'python3 -m robot --outputdir robot_result ./test-plus.robot'
             }
         }
