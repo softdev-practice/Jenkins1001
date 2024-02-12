@@ -1,22 +1,22 @@
-FROM node:21
+FROM node:21.4.0
 
-RUN mkdir -p /app/node_modules && chown -R node:node /app
+# RUN mkdir -p /app/node_modules && chown -R node:node /app
 
 WORKDIR /app
 
 COPY package*.json ./
 
-USER node
+# USER node
 
-RUN npm config set registry https://registry.npmjs.org/
+# RUN npm config set registry https://registry.npmjs.org/
 
 RUN npm install --verbose
 # If you are building your code for production
 # RUN npm ci --omit=dev
 
-# COPY . .
+COPY . .
 
-COPY --chown=node:node . .
+# COPY --chown=node:node . .
 
 EXPOSE 5000
 
