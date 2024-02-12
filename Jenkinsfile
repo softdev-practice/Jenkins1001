@@ -35,11 +35,11 @@ pipeline {
                 sh 'pwd && ls -al'
                 sh 'docker compose -f ./compose.dev.yaml up -d --build'
                 echo 'Cloning Robot'
-                dir('./robot/') {
-                    git branch: 'main', url: 'https://github.com/Rosemarries/Jenkins1001.git'
-                }
+                // dir('./robot/') {
+                //     git branch: 'main', url: 'https://github.com/Rosemarries/Jenkins1001.git'
+                // }
                 echo 'Run Robot'
-                sh 'cd ./robot && robot --outputdir robot_result ./test-plus.robot'
+                sh 'robot --outputdir robot_result ./test-plus.robot'
             }
         }
 
