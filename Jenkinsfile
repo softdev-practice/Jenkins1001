@@ -36,15 +36,23 @@ pipeline {
                 sh 'python3 get-pip.py'
                 sh 'python3 -m pip install --upgrade pip setuptools wheel'
                 sh 'python3 -m pip install robotframework'
+                sh 'python3 -m pip install robotframework-requests'
+            }
+        }
+
+        stage("docker compose dev up"){
+            steps {
+                echo 'Compose Dev up'
+                sh 'pwd && ls -al'
+                sh 'docker compose -f ./compose.dev.yaml up -d --build'
+                sh 'docker compose ps'
+                sh 'docker ps'
             }
         }
 
         stage("robot") {
             steps {
-                echo 'Compose Dev up'
-                sh 'pwd && ls -al'
-                sh 'docker compose -f ./compose.dev.yaml up -d --build'
-                echo 'Cloning Robot'
+                // echo 'Cloning Robot'
                 // dir('./robot/') {
                 //     git branch: 'main', url: 'https://github.com/Rosemarries/Jenkins1001.git'
                 // }
