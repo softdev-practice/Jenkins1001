@@ -4,7 +4,9 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-COPY package*.json ./
+# COPY package*.json ./
+
+COPY . .
 
 # USER node
 
@@ -14,7 +16,7 @@ RUN npm i
 # If you are building your code for production
 # RUN npm ci --omit=dev
 
-COPY . .
+# COPY . .
 
 # COPY --chown=node:node . .
 
