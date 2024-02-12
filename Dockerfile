@@ -1,4 +1,4 @@
-FROM node:21.4.0-alpine
+FROM node:20-alpine
 
 # RUN mkdir -p /app/node_modules && chown -R node:node /app
 
@@ -10,7 +10,7 @@ COPY package*.json ./
 
 # RUN npm config set registry https://registry.npmjs.org/
 
-RUN npm ci
+RUN npm i
 # If you are building your code for production
 # RUN npm ci --omit=dev
 
