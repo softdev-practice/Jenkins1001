@@ -10,7 +10,7 @@ COPY package*.json ./
 
 # RUN npm config set registry https://registry.npmjs.org/
 
-RUN npm install --verbose
+RUN npm ci
 # If you are building your code for production
 # RUN npm ci --omit=dev
 
