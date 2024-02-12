@@ -1,4 +1,4 @@
-FROM node:18
+FROM node:21
 
 RUN mkdir -p /app/node_modules && chown -R node:node /app
 
