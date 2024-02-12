@@ -33,6 +33,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install dependencies
+RUN npm config rm registry
 RUN npm install --only=production
 
 # Copy the rest of the application code
