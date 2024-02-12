@@ -63,13 +63,13 @@ pipeline {
 
         stage("push to registry") {
             steps {
-                // withCredentials([
-                //     usernamePassword(credentialsId: 'gitlab-profile', usernameVariable: GITLAB_USER, passwordVariable: GITLAB_ACCESS_TOKEN)
-                // ]) {
-                //     sh "docker login registry.gitlab.com -u ${GITLAB_USER} -p ${GITLAB_ACCESS_PASSWD}"
+                withCredentials([
+                    usernamePassword(credentialsId: 'gitlab-profile', usernameVariable: GITLAB_USER, passwordVariable: GITLAB_ACCESS_TOKEN)
+                ]) {
+                    sh "docker login registry.gitlab.com -u ${GITLAB_USER} -p ${GITLAB_ACCESS_PASSWD}"
                     sh "docker build -t registry.gitlab.com/softdev-practice/jenkins1001 ./"
                     sh "docker push registry.gitlab.com/softdev-practice/jenkins1001"
-                // }
+                }
                 echo 'Push Success!'
             }
         }
