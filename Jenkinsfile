@@ -31,7 +31,7 @@ pipeline {
         stage("robot") {
             steps {
                 echo 'Compose Dev up'
-                sh 'ls -al'
+                sh 'pwd && ls -al'
                 sh 'docker compose -f ./compose.dev.yaml up -d --build'
                 echo 'Cloning Robot'
                 dir('./robot/') {
