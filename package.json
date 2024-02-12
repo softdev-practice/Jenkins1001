@@ -14,7 +14,8 @@
     "test": "jest --detectOpenHandles --coverage"
   },
   "keywords": [],
-  "author": "",
+  "author": "Rosemarries <rosarinniyomsuntisuk@gmail.com>",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "repository": "https://github.com/softdev-practice/Jenkins1001.git"
 }
