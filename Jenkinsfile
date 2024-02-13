@@ -76,7 +76,7 @@ pipeline {
 
         stage("push to registry") {
             steps {
-                echo 'Logining...'
+                echo 'Logining in...'
                 withCredentials([
                     usernamePassword(credentialsId: 'jenkins_test', usernameVariable: 'DEPLOY_USER', passwordVariable: 'DEPLOY_TOKEN')
                 ]) {
