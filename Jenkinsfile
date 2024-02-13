@@ -16,7 +16,7 @@ pipeline {
                 }
             }
             steps {
-                // sh 'docker stop $(docker ps -a -q)'
+                sh 'docker stop $(docker ps -a -q)'
                 echo 'building the application...'
                 sh 'npm install --global yarn'
                 sh 'yarn install'
