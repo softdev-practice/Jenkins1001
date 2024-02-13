@@ -64,16 +64,16 @@ pipeline {
         stage("push to registry") {
             steps {
                 echo 'Logining...'
-                // withCredentials([
-                //     usernamePassword(credentialsId: 'jenkins_deploy', usernameVariable: DEPLOY_USER, passwordVariable: DEPLOY_TOKEN)
-                // ]) {
-                //     sh "docker login registry.gitlab.com/softdev-practice/jenkins1001 -u ${DEPLOY_USER} -p ${DEPLOY_TOKEN}"
+                withCredentials([
+                    usernamePassword(credentialsId: 'jenkins_deploy', usernameVariable: DEPLOY_USER, passwordVariable: DEPLOY_TOKEN)
+                ]) {
+                    sh "docker login registry.gitlab.com -u ${DEPLOY_USER} -p ${DEPLOY_TOKEN}"
                     
-                withDockerRegistry([ credentialsId: "docker-hub-credentials", url: ""]) {
+                // withDockerRegistry([ credentialsId: "docker-hub-credentials", url: ""]) {
                     sh "docker build -t registry.gitlab.com/softdev-practice/jenkins1001 ."
                     sh "docker push registry.gitlab.com/softdev-practice/jenkins1001"
-                }
                 // }
+                }
                 echo 'Push Success!'
             }
         }
