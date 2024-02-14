@@ -4,9 +4,9 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN yarn install --cache-folder ./yarn-cache
+# RUN yarn install --cache-folder ./yarn-cache
 
-# RUN yarn install
+RUN yarn install
 
 COPY . .
 
