@@ -100,7 +100,7 @@ pipeline {
             steps {
                 echo 'deploying the application...'
                 sh 'docker compose up -d --build'
-                echo 'DONE!!!'
+                echo 'DONE!!'
             }
         }
     }
