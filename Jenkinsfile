@@ -1,7 +1,7 @@
 // CODE_CHANGES = getGitChanges()
 
 pipeline {
-    agent any
+    agent none
 
     tools {
         nodejs "NodeJS"
@@ -9,6 +9,12 @@ pipeline {
 
     stages {
         stage("clear containers and images if exist") {
+            agent { label 'test' }
+            when {
+                expression {
+                    BRANCH_NAME == 'main'
+                }
+            }
             steps {
                 script {
                     def runningContainers = sh(script: 'docker ps -q | wc -l', returnStdout: true).trim().toInteger()
@@ -23,10 +29,10 @@ pipeline {
         }
 
         stage("build") {
+            agent { label 'test' }
             when {
                 expression {
-                    // (BRANCH_NAME == 'dev' || BRANCH_NAME == 'main') && CODE_CHANGES
-                    BRANCH_NAME == 'dev' || BRANCH_NAME == 'main'
+                    BRANCH_NAME == 'main'
                 }
             }
             steps {
@@ -37,6 +43,7 @@ pipeline {
         }
 
         stage("test") {
+            agent { label 'test' }
             steps {
                 echo 'testing the application...'
                 sh 'yarn test'
@@ -44,6 +51,7 @@ pipeline {
         }
 
         stage("installing robot") {
+            agent { label 'test' }
             steps {
                 sh 'curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py'
                 sh 'python3 get-pip.py'
@@ -54,6 +62,7 @@ pipeline {
         }
 
         stage("docker compose dev up"){
+            agent { label 'test' }
             steps {
                 echo 'Compose Dev up'
                 sh 'pwd && ls -al'
@@ -64,6 +73,7 @@ pipeline {
         }
 
         stage("robot") {
+            agent { label 'test' }
             steps {
                 // echo 'Cloning Robot'
                 // dir('./robot/') {
@@ -75,6 +85,7 @@ pipeline {
         }
 
         stage("push to registry") {
+            agent { label 'test' }
             steps {
                 echo 'Logining in...'
                 withCredentials([
@@ -89,6 +100,7 @@ pipeline {
         }
 
         stage("compose down and prune") {
+            agent { label 'test' }
             steps {
                 echo 'Cleaning'
                 sh 'docker compose -f ./compose.dev.yaml down'
@@ -96,12 +108,20 @@ pipeline {
             }
         }
 
-        stage("deploy") {
-            steps {
-                echo 'deploying the application...'
-                sh 'docker compose up -d --build'
-                echo 'DONE!!'
-            }
-        }
+        // stage("deploy") {
+        //     agent { label 'test' }
+        //     steps {
+        //         echo 'deploying the application...'
+        //         sh 'docker compose up -d --build'
+        //         echo 'DONE!!'
+        //     }
+        // }
+
+        // stage("pull image from registry") {
+        //     agent { label 'pre-prod' }
+        //     steps {
+        //         x
+        //     }
+        // }
     }
 }
