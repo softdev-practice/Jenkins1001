@@ -9,9 +9,9 @@ pipeline {
 
     stages {
         stage("clear containers and images if exist") {
-            parallel {
-                agent { label 'test' }
-                agent { label 'pre-prod' }
+            agent {
+                node { label 'test' }
+                node { label 'pre-prod' }
             }
             when {
                 expression {
@@ -135,12 +135,12 @@ pipeline {
             }
         }
 
-        stage("container stop") {
-            agent { label 'test' }
-            steps {
-                echo 'Cleaning'
-                sh 'docker system prune -a -f'
-            }
-        }
+        // stage("container stop") {
+        //     agent { label 'test' }
+        //     steps {
+        //         echo 'Cleaning'
+        //         sh 'docker system prune -a -f'
+        //     }
+        // }
     }
 }
