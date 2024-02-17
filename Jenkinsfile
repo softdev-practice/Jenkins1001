@@ -117,11 +117,19 @@ pipeline {
         //     }
         // }
 
-        // stage("pull image from registry") {
-        //     agent { label 'pre-prod' }
-        //     steps {
-        //         x
-        //     }
-        // }
+        stage("pull image from registry") {
+            agent { label 'pre-prod' }
+            steps {
+                echo 'Logining in...'
+                withCredentials([
+                    usernamePassword(credentialsId: 'jenkins_test', usernameVariable: 'DEPLOY_USER', passwordVariable: 'DEPLOY_TOKEN')
+                ]) {
+                    sh "docker login registry.gitlab.com -u ${DEPLOY_USER} -p ${DEPLOY_TOKEN}"
+                }
+                sh "docker pull registry.gitlab.com/softdev-practice/jenkins1001"
+                sh "docker run -p 80:80 registry.gitlab.com/softdev-practice/jenkins1001"
+                echo 'Create Container Success!'
+            }
+        }
     }
 }
