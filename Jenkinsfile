@@ -116,7 +116,7 @@ pipeline {
                     sh "docker login registry.gitlab.com -u ${DEPLOY_USER} -p ${DEPLOY_TOKEN}"
                 }
                 sh "docker pull registry.gitlab.com/softdev-practice/jenkins1001"
-                sh "docker run -p 5000:5000 registry.gitlab.com/softdev-practice/jenkins1001 -d"
+                sh "docker run -d -p 5000:5000 registry.gitlab.com/softdev-practice/jenkins1001"
                 echo 'Create Container Success!'
             }
         }
