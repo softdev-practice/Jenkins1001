@@ -7,7 +7,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/getcode', (req, res) => {
-    res.send('Hello! This is /getcode .')
+    res.send('Hello! This is /getcode')
 })
 
 app.get('/plus/:a/:b', (req, res) => {
