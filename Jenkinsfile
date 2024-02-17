@@ -9,10 +9,7 @@ pipeline {
 
     stages {
         stage("clear containers and images if exist") {
-            agent {
-                node { label 'test' }
-                node { label 'pre-prod' }
-            }
+            agent any
             when {
                 expression {
                     BRANCH_NAME == 'main'
@@ -52,17 +49,6 @@ pipeline {
                 sh 'yarn test'
             }
         }
-
-        // stage("installing robot") {
-        //     agent { label 'test' }
-        //     steps {
-        //         sh 'curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py'
-        //         sh 'python3 get-pip.py'
-        //         sh 'python3 -m pip install --upgrade pip setuptools wheel'
-        //         sh 'python3 -m pip install robotframework'
-        //         sh 'python3 -m pip install robotframework-requests'
-        //     }
-        // }
 
         stage("docker compose dev up"){
             agent { label 'test' }
