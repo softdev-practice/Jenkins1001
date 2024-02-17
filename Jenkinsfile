@@ -66,7 +66,7 @@ pipeline {
             steps {
                 echo 'Check for ./robot/'
                 script {
-                    if (!fileExists(dir: 'robot')) {
+                    if (!fileExists('robot')) {
                         sh 'mkdir robot'
                     }
                 }
