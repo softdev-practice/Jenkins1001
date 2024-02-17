@@ -9,7 +9,10 @@ pipeline {
 
     stages {
         stage("clear containers and images if exist") {
-            agent { label 'test' }
+            parallel {
+                agent { label 'test' }
+                agent { label 'pre-prod' }
+            }
             when {
                 expression {
                     BRANCH_NAME == 'main'
@@ -127,8 +130,16 @@ pipeline {
                     sh "docker login registry.gitlab.com -u ${DEPLOY_USER} -p ${DEPLOY_TOKEN}"
                 }
                 sh "docker pull registry.gitlab.com/softdev-practice/jenkins1001"
-                sh "docker run -p 80:80 registry.gitlab.com/softdev-practice/jenkins1001"
+                sh "docker run -p 5000:5000 registry.gitlab.com/softdev-practice/jenkins1001"
                 echo 'Create Container Success!'
+            }
+        }
+
+        stage("container stop") {
+            agent { label 'test' }
+            steps {
+                echo 'Cleaning'
+                sh 'docker system prune -a -f'
             }
         }
     }
