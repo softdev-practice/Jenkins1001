@@ -64,12 +64,13 @@ pipeline {
         stage("robot") {
             agent { label 'test' }
             steps {
-                // echo 'Cloning Robot'
+                echo 'Cloning Robot'
+                sh 'git clone https://github.com/Rosemarries/robot.git'
                 // dir('./robot/') {
                 //     git branch: 'main', url: 'https://github.com/Rosemarries/Jenkins1001.git'
                 // }
                 echo 'Run Robot'
-                sh 'python3 -m robot --outputdir robot_result ./test-plus.robot'
+                sh 'cd robot && python3 -m robot --outputdir robot_result ./test-plus.robot'
             }
         }
 
@@ -97,15 +98,6 @@ pipeline {
             }
         }
 
-        // stage("deploy") {
-        //     agent { label 'test' }
-        //     steps {
-        //         echo 'deploying the application...'
-        //         sh 'docker compose up -d --build'
-        //         echo 'DONE!!'
-        //     }
-        // }
-
         stage("pull image from registry") {
             agent { label 'pre-prod' }
             steps {
@@ -120,13 +112,5 @@ pipeline {
                 echo 'Create Container Success!'
             }
         }
-
-        // stage("container stop") {
-        //     agent { label 'test' }
-        //     steps {
-        //         echo 'Cleaning'
-        //         sh 'docker system prune -a -f'
-        //     }
-        // }
     }
 }
