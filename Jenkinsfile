@@ -65,13 +65,8 @@ pipeline {
             agent { label 'test' }
             steps {
                 echo 'Check for ./robot/'
-                script {
-                    if (!fileExists('robot')) {
-                        sh 'mkdir robot'
-                    }
-                }
+                sh 'mkdir -p robot'
                 echo 'Cloning Robot'
-                // sh 'git clone https://github.com/Rosemarries/robot.git'
                 dir('./robot/') {
                     git branch: 'main', url: 'https://github.com/Rosemarries/robot.git'
                 }
