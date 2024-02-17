@@ -67,7 +67,7 @@ pipeline {
                 echo 'Cloning Robot'
                 sh 'git clone https://github.com/Rosemarries/robot.git'
                 // dir('./robot/') {
-                //     git branch: 'main', url: 'https://github.com/Rosemarries/Jenkins1001.git'
+                //     git branch: 'main', url: 'https://github.com/Rosemarries/robot.git'
                 // }
                 echo 'Run Robot'
                 sh 'cd robot && python3 -m robot --outputdir robot_result ./test-plus.robot'
