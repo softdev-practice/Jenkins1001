@@ -15,11 +15,11 @@ pipeline {
     stages {
         stage("clear containers and images if exist") {
             agent any
-            when {
-                expression {
-                    BRANCH_NAME == 'main'
-                }
-            }
+            // when {
+            //     expression {
+            //         BRANCH_NAME == 'main'
+            //     }
+            // }
             steps {
                 script {
                     def runningContainers = sh(script: 'docker ps -q | wc -l', returnStdout: true).trim().toInteger()
@@ -35,11 +35,6 @@ pipeline {
 
         stage("install packages") {
             agent { label 'test' }
-            when {
-                expression {
-                    BRANCH_NAME == 'main'
-                }
-            }
             steps {
                 echo 'building the application...'
                 sh 'npm install --global yarn'
