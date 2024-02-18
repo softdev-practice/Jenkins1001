@@ -7,6 +7,11 @@ pipeline {
         nodejs "NodeJS"
     }
 
+    environment {
+        GITLAB_REGISTRY = "registry.gitlab.com/softdev-practice/jenkins1001"
+        ROBOT_GIT = "https://github.com/Rosemarries/robot.git"
+    }
+
     stages {
         stage("clear containers and images if exist") {
             agent any
@@ -28,7 +33,7 @@ pipeline {
             }
         }
 
-        stage("build") {
+        stage("install packages") {
             agent { label 'test' }
             when {
                 expression {
@@ -68,7 +73,7 @@ pipeline {
                 sh 'mkdir -p robot'
                 echo 'Cloning Robot'
                 dir('./robot/') {
-                    git branch: 'main', url: 'https://github.com/Rosemarries/robot.git'
+                    git branch: 'main', url: "${ROBOT_GIT}"
                 }
                 echo 'Run Robot'
                 sh 'cd robot && python3 -m robot --outputdir robot_result ./test-plus.robot'
@@ -84,8 +89,8 @@ pipeline {
                 ]) {
                     sh "docker login registry.gitlab.com -u ${DEPLOY_USER} -p ${DEPLOY_TOKEN}"
                 }
-                sh "docker build -t registry.gitlab.com/softdev-practice/jenkins1001 ."
-                sh "docker push registry.gitlab.com/softdev-practice/jenkins1001"
+                sh "docker build -t ${GITLAB_REGISTRY} ."
+                sh "docker push ${GITLAB_REGISTRY}"
                 echo 'Push Success!'
             }
         }
@@ -108,8 +113,8 @@ pipeline {
                 ]) {
                     sh "docker login registry.gitlab.com -u ${DEPLOY_USER} -p ${DEPLOY_TOKEN}"
                 }
-                sh "docker pull registry.gitlab.com/softdev-practice/jenkins1001"
-                sh "docker run -d -p 5000:5000 registry.gitlab.com/softdev-practice/jenkins1001"
+                sh "docker pull ${GITLAB_REGISTRY}"
+                sh "docker run -d -p 5000:5000 ${GITLAB_REGISTRY}"
                 echo 'Create Container Success!'
             }
         }
