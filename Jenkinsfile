@@ -9,7 +9,7 @@ pipeline {
 
     environment {
         GITLAB_REGISTRY = "registry.gitlab.com/softdev-practice/jenkins1001"
-        ROBOT_GIT = "https://github.com/Rosemarries/robot.git"
+        ROBOT_GIT = "https://github.com/softdev-practice/Robot-Test.git"
     }
 
     stages {
