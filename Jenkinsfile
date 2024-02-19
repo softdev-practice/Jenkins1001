@@ -8,18 +8,18 @@ pipeline {
     }
 
     environment {
-        GITLAB_REGISTRY = "registry.gitlab.com/cicd_softdev/CICD_Softdev"
-        ROBOT_GIT = "https://github.com/Rosemarries/robot.git"
+        GITLAB_REGISTRY = "registry.gitlab.com/softdev-practice/jenkins1001"
+        ROBOT_GIT = "https://github.com/softdev-practice/Robot-Test.git"
     }
 
     stages {
         stage("clear containers and images if exist") {
             agent any
-            when {
-                expression {
-                    BRANCH_NAME == 'main'
-                }
-            }
+            // when {
+            //     expression {
+            //         BRANCH_NAME == 'main'
+            //     }
+            // }
             steps {
                 script {
                     def runningContainers = sh(script: 'docker ps -q | wc -l', returnStdout: true).trim().toInteger()
@@ -35,11 +35,6 @@ pipeline {
 
         stage("install packages") {
             agent { label 'test' }
-            when {
-                expression {
-                    BRANCH_NAME == 'main'
-                }
-            }
             steps {
                 echo 'building the application...'
                 sh 'npm install --global yarn'
