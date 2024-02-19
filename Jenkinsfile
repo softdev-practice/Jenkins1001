@@ -8,7 +8,7 @@ pipeline {
     }
 
     environment {
-        GITLAB_REGISTRY = "registry.gitlab.com/softdev-practice/jenkins1001"
+        GITLAB_REGISTRY = "registry.gitlab.com/cicd_softdev/CICD_Softdev"
         ROBOT_GIT = "https://github.com/Rosemarries/robot.git"
     }
 
@@ -109,7 +109,7 @@ pipeline {
             steps {
                 echo 'Logining in...'
                 withCredentials([
-                    usernamePassword(credentialsId: 'jenkins_test', usernameVariable: 'DEPLOY_USER', passwordVariable: 'DEPLOY_TOKEN')
+                    usernamePassword(credentialsId: 'jenkins_test1', usernameVariable: 'DEPLOY_USER', passwordVariable: 'DEPLOY_TOKEN')
                 ]) {
                     sh "docker login registry.gitlab.com -u ${DEPLOY_USER} -p ${DEPLOY_TOKEN}"
                 }
