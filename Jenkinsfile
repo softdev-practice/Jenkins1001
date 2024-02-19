@@ -104,7 +104,7 @@ pipeline {
             steps {
                 echo 'Logining in...'
                 withCredentials([
-                    usernamePassword(credentialsId: 'jenkins_test', usernameVariable: 'DEPLOY_USER', passwordVariable: 'DEPLOY_TOKEN')
+                    usernamePassword(credentialsId: 'jenkins_test1', usernameVariable: 'DEPLOY_USER', passwordVariable: 'DEPLOY_TOKEN')
                 ]) {
                     sh "docker login registry.gitlab.com -u ${DEPLOY_USER} -p ${DEPLOY_TOKEN}"
                 }
